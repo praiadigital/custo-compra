@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custo Real de Compra — ITBI, Escritura e Total | Praia Digital</title>
+<meta name="description" content="Calculadora do custo real de compra de imóvel no litoral: ITBI, escritura, registro, avaliação e custo total de aquisição.">
+<style>
+body{font-family:system-ui,sans-serif;margin:0;background:#fffbeb;color:#78350f;line-height:1.6}
+nav{background:#b45309;padding:12px 20px;display:flex;gap:14px;flex-wrap:wrap}
+nav a{color:#fef3c7;text-decoration:none;font-weight:600;font-size:.95em}
+nav a:hover{color:#fff}
+.hero{background:linear-gradient(135deg,#b45309,#f59e0b);color:#fff;padding:50px 20px;text-align:center}
+.container{max-width:960px;margin:0 auto;padding:30px 20px}
+.card{background:#fff;border-radius:12px;padding:24px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+label{display:block;margin:10px 0 4px;font-weight:600}
+input,select{width:100%;padding:10px;border:1px solid #fde68a;border-radius:8px;box-sizing:border-box}
+button{background:#f59e0b;color:#fff;border:0;padding:12px 26px;border-radius:8px;font-weight:700;cursor:pointer;margin-top:14px;font-size:1em}
+#out{margin-top:14px;color:#78350f}
+#out td{padding:6px 10px;border-bottom:1px solid #fde68a}
+footer{text-align:center;padding:24px;color:#64748b;font-size:.9em}
+</style>
+</head>
+<body>
+<nav>
+<a href="https://praia.digital/">🌊 Praia Digital</a>
+<a href="https://praiadigital.github.io/apps/">🗂️ Todos os Apps</a>
+<a href="https://praiadigital.github.io/radar-imoveis/">Radar</a>
+<a href="https://praiadigital.github.io/comparador-bairros/">Comparador</a>
+<a href="https://praiadigital.github.io/vistoria-digital/">Vistoria</a>
+<a href="https://praiadigital.github.io/custo-compra/">Custo de Compra</a>
+<a href="https://praiadigital.github.io/simulador-credito/">Crédito</a>
+</nav>
+<div class="hero"><h1>🧮 Custo Real de Compra</h1><p>O preço do imóvel é só o começo. Calcule ITBI, cartório e o custo total real da aquisição.</p></div>
+<div class="container">
+<div class="card">
+<label for="valor">Valor do imóvel (R$)</label><input id="valor" type="number" value="350000">
+<label for="cidade">Cidade (alíquota ITBI)</label>
+<select id="cidade"><option value="3">Praia Grande (3%)</option><option value="2">Santos (2%)</option><option value="3">Guarujá (3%)</option><option value="2">Bertioga (2%)</option><option value="3">Outra cidade (3%)</option></select>
+<label for="fin">Vai financiar?</label>
+<select id="fin"><option value="1">Sim, com financiamento</option><option value="0">Não, à vista</option></select>
+<button onclick="calc()">🧮 Calcular custo total</button>
+<div id="out"></div>
+</div>
+<div class="card">
+<h2>Continue sua jornada</h2>
+<p>🏦 <a href="https://praiadigital.github.io/simulador-credito/">Simule o financiamento (FGTS/MCMV/SBPE)</a> · 📡 <a href="https://praiadigital.github.io/radar-imoveis/">Veja o score da cidade no Radar</a> · 📖 <a href="https://praia.digital/blog/guia-custo-real-compra-imovel-litoral-2026.html">Guia completo do custo real</a></p>
+</div>
+</div>
+<footer>Parte da rede <a href="https://praia.digital/">praia.digital</a> — <a href="https://praiadigital.github.io/apps/">todos os apps</a></footer>
+<script>
+function calc(){
+const v=parseFloat(document.getElementById('valor').value)||0;
+const al=parseFloat(document.getElementById('cidade').value)/100;
+const fin=document.getElementById('fin').value==="1";
+const itbi=v*al, cartorio=fin?v*0.01+2000:2500, avaliacao=fin?3000:0, outros=1500;
+const total=v+itbi+cartorio+avaliacao+outros;
+const f=x=>'R$ '+x.toLocaleString('pt-BR',{maximumFractionDigits:0});
+document.getElementById('out').innerHTML=`<table><tr><td>Imóvel</td><td>${f(v)}</td></tr><tr><td>ITBI (${(al*100).toFixed(0)}%)</td><td>${f(itbi)}</td></tr><tr><td>Cartório/escritura${fin?' + registro do contrato':''}</td><td>${f(cartorio)}</td></tr>${fin?`<tr><td>Avaliação bancária</td><td>${f(avaliacao)}</td></tr>`:''}<tr><td>Outros (certidões, mudança)</td><td>${f(outros)}</td></tr><tr><td><strong>Custo total</strong></td><td><strong>${f(total)}</strong> (+${((total/v-1)*100).toFixed(1)}%)</td></tr></table>`;
+}
+</script>
+</body>
+</html>
